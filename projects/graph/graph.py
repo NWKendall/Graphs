@@ -3,9 +3,11 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
+
 class Graph:
 
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
+
     def __init__(self):
         self.vertices = {}
 
@@ -85,7 +87,29 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        # create queueu
+        q = Queue()
+        # insert first value into q (start ing v)
+        q.enqueue([starting_vertex])
+
+        # create set to store all visited nodes
+        visited = set()
+        # while q has vs in it
+        while q.size() > 0:
+            # removing head of q and sotring it in value
+            path = q.dequeue()
+            node = path[-1]
+            # checking to see if removed head is not in visited
+            if node not in visited:
+                visited.add(node)
+                for neighbour in self.get_neighbors(node):
+                    new_path = list(path)
+                    new_path.append(neighbour)
+                    q.enqueue(new_path)
+                    if neighbour == destination_vertex:
+                        return new_path
+                        
+        return "So sorry, but a connecting path doesn't exist :("
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -104,6 +128,7 @@ class Graph:
         This should be done using recursion.
         """
         pass  # TODO
+
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
