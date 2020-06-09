@@ -105,7 +105,7 @@ class Graph:
         visited = set()
         # while q has is not empty
         while q.size() > 0:
-            # removing head of q (a list) and sotring it in value
+            # removing head of q (a list) and sorting it in value
             path = q.dequeue()
             # storing last value in path array
             node = path[-1]
