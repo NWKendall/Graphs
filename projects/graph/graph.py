@@ -85,7 +85,7 @@ class Graph:
         # track visited nodes
         visited.add(starting_vertex)
         print(starting_vertex)
-        # traverse case - recurse cal
+        # traverse case - recurse call
         for neighbour in self.get_neighbors(starting_vertex):
             if neighbour not in visited:
                 self.dft_recursive(neighbour, visited)
@@ -152,7 +152,7 @@ class Graph:
                         
         return "So sorry, but a connecting path doesn't exist :("
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited = None, path = None):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -160,7 +160,25 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+
+        if visited is None:
+            visited = set()
+        
+        if path is None:
+            path = []
+
+        visited.add(starting_vertex)
+        new_path = path + [starting_vertex]
+
+        if starting_vertex == destination_vertex:
+            return new_path
+
+        for neighbour in self.get_neighbors(starting_vertex):
+            if neighbour not in visited:
+                neighbour_path =  self.dfs_recursive(neighbour, destination_vertex, visited, new_path)
+                if neighbour_path:
+                    return neighbour_path
+
 
 
 if __name__ == '__main__':
