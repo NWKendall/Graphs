@@ -72,14 +72,23 @@ class Graph:
                 for next_vert in self.get_neighbors(v):
                     st.push(next_vert)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited = None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        # base case
+        if visited is None:
+            visited = set()
+        # track visited nodes
+        visited.add(starting_vertex)
+        print(starting_vertex)
+        # traverse case - recurse cal
+        for neighbour in self.get_neighbors(starting_vertex):
+            if neighbour not in visited:
+                self.dft_recursive(neighbour, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -87,21 +96,23 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        # create queueu
+        # create queue
         q = Queue()
-        # insert first value into q (start ing v)
+        # insert first value into q (start ing v) as a LIST!!!
         q.enqueue([starting_vertex])
 
         # create set to store all visited nodes
         visited = set()
-        # while q has vs in it
+        # while q has is not empty
         while q.size() > 0:
-            # removing head of q and sotring it in value
+            # removing head of q (a list) and sotring it in value
             path = q.dequeue()
+            # storing last value in path array
             node = path[-1]
-            # checking to see if removed head is not in visited
+            # checking to see if node is not in visited
             if node not in visited:
                 visited.add(node)
+                # for each node, creating new paths for each of it's neighbours
                 for neighbour in self.get_neighbors(node):
                     new_path = list(path)
                     new_path.append(neighbour)
@@ -117,7 +128,7 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        # create queueu
+        # create queue
         st = Stack()
         # insert first value into q (start ing v)
         st.push([starting_vertex])
@@ -129,7 +140,7 @@ class Graph:
             # removing head of q and sotring it in value
             path = st.pop()
             node = path[-1]
-            # checking to see if removed head is not in visited
+            # if not visited
             if node not in visited:
                 visited.add(node)
                 for neighbour in self.get_neighbors(node):
