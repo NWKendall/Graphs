@@ -117,7 +117,29 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        # create queueu
+        st = Stack()
+        # insert first value into q (start ing v)
+        st.push([starting_vertex])
+
+        # create set to store all visited nodes
+        visited = set()
+        # while q has vs in it
+        while st.size() > 0:
+            # removing head of q and sotring it in value
+            path = st.pop()
+            node = path[-1]
+            # checking to see if removed head is not in visited
+            if node not in visited:
+                visited.add(node)
+                for neighbour in self.get_neighbors(node):
+                    new_path = list(path)
+                    new_path.append(neighbour)
+                    st.push(new_path)
+                    if neighbour == destination_vertex:
+                        return new_path
+                        
+        return "So sorry, but a connecting path doesn't exist :("
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
