@@ -49,7 +49,9 @@ def earliest_ancestor(ancestors, starting_node):
     # pushing starting_node in a List
     q.enqueue([starting_node])
     # NO IDEA WHAT THE BELOW IS DOING?! 
+    # -1 is the default return value
     earliest_ancestor = -1
+    # length of starting node in array
     max_path_len = 1
 
     # setting up conditions for search operations (wile queue is populated)
@@ -57,8 +59,10 @@ def earliest_ancestor(ancestors, starting_node):
         # setting head of queue (array) to local mem
         path = q.dequeue()
         # setting last item in array to value
-        v = path[-1]
-        # search condition
+        v = path[-1]                        
+        # search condition               
+        # first part checking values of sibling vertices, and returning the smaller one
+        # second part controlling for next rounf of iterations, dont want to go from len(2) to len(5), rather, len(2), len(3), len(4), len(5) etc.
         if (len(path) >= max_path_len and v < earliest_ancestor) or (len(path) > max_path_len):  
             # reassigning var to len of items in path list
             earliest_ancestor = v
@@ -73,7 +77,6 @@ def earliest_ancestor(ancestors, starting_node):
             q.enqueue(new_path)
 
     return earliest_ancestor
-
 
 # need node class?
     # value, left, right

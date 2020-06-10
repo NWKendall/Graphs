@@ -91,17 +91,19 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        # create queue for BFS
         q = Queue()
-
+        # initialize queue with default user_id
         q.enqueue([user_id])
-
+        # initiate traversal
         while q.size() > 0:
+            # path is an array
             path = q.dequeue()
+            # user is last item in array
             user = path[-1]
-            # if not visited
+            # if user not visited
             if user not in visited:
-                # do the thing
-                # add to visited
+                # do the thing (adding the path to value of user in visited)
                 visited[user] = path
                 # for each friends friend
                 for friend in self.friendships[user]:
@@ -109,16 +111,47 @@ class SocialGraph:
                     new_path = path.copy()
                     new_path.append(friend)
                     q.enqueue(new_path)
-
+        
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populate_graph(10, 2)
+    # sg.populate_graph(1000, 5)
+    sg.add_user(1)
+    sg.add_user(2)
+    sg.add_user(3)
+    sg.add_user(4)
+    sg.add_user(5)
+    sg.add_user(6)
+    sg.add_user(7)
+    sg.add_user(8)
+    sg.add_user(9)
+    sg.add_user(10)
+    sg.add_friendship(1, 8)
+    sg.add_friendship(1, 10)
+    sg.add_friendship(1, 5)
+    sg.add_friendship(2, 10)
+    sg.add_friendship(2, 5)
+    sg.add_friendship(2, 7)
+    sg.add_friendship(3, 4)
+    sg.add_friendship(4, 9)
+    sg.add_friendship(5, 8)
+    sg.add_friendship(5, 1)
+    sg.add_friendship(5, 2)
+    sg.add_friendship(6, 10)
+    sg.add_friendship(7, 2)
+    sg.add_friendship(8, 1)
+    sg.add_friendship(8, 6)
+    sg.add_friendship(9, 4)
+    sg.add_friendship(10, 1)
+    sg.add_friendship(10, 2)
+    sg.add_friendship(10, 6)
     print(sg.friendships)
     connections = sg.get_all_social_paths(1)
     print(connections)
+
+    # {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}}
 
 ##############
 #### UPER ####
@@ -145,3 +178,34 @@ if __name__ == '__main__':
     # traverse friends of friends
         # check to see not already in visited
         # if not add to visited
+
+
+# # README
+# {   1: [1],   
+#     2: [1, 10, 2],
+#     5: [1, 5],
+#     6: [1, 10, 6],
+#     7: [1, 10, 2, 7]
+#     8: [1, 8],
+#     10: [1, 10], 
+# }
+# # MINE
+# {
+#     1: [1], ✅
+#     2: [1, 10, 2], ✅
+#     5: [1, 5], ✅
+#     6: [1, 8, 6], 
+#     7: [1, 10, 2, 7],✅
+#     8: [1, 8], ✅
+#     10: [1, 10], ✅
+# }
+# # MILO
+# {
+#     1: [1], ✅
+#     2: [1, 5, 2], 
+#     5: [1, 5], ✅ 
+#     6: [1, 10, 6], ✅
+#     7: [1, 5, 2, 7], 
+#     8: [1, 8], ✅
+#     10: [1, 10], ✅
+# }
