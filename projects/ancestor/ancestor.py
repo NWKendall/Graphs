@@ -36,7 +36,7 @@ class Graph:
 def earliest_ancestor(ancestors, starting_node):
     # create graph
     graph = Graph()
-    # importing tuples into graph vertices
+    # importing ancestors into graph vertices
     for pair in ancestors:
         graph.add_vertex(pair[0])
         graph.add_vertex(pair[1])
@@ -49,23 +49,22 @@ def earliest_ancestor(ancestors, starting_node):
     # pushing starting_node in a List
     q.enqueue([starting_node])
     # NO IDEA WHAT THE BELOW IS DOING?! 
-    max_path_len = 1
     earliest_ancestor = -1
+    max_path_len = 1
 
     # setting up conditions for search operations (wile queue is populated)
     while q.size() > 0:
-        # setting head of queue (array) to loval mem
+        # setting head of queue (array) to local mem
         path = q.dequeue()
         # setting last item in array to value
         v = path[-1]
-
         # search condition
-        if (len(path) >= max_path_len and v < earliest_ancestor) or (len(path) > max_path_len):
-            earliest_ancestor = v
+        if (len(path) >= max_path_len and v < earliest_ancestor) or (len(path) > max_path_len):  
             # reassigning var to len of items in path list
+            earliest_ancestor = v
             max_path_len = len(path)
         # creating a new array for each neighbour (last item in array) to be appended to queue
-        for neighbour in graph.vertices[v]:
+        for neighbour in graph.get_neighbors(v):
             # new array per neighbour
             new_path = list(path)
             # adding unique value (neighbour)
