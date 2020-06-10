@@ -34,39 +34,44 @@ class Graph:
 
 
 def earliest_ancestor(ancestors, starting_node):
-
+    # create graph
     graph = Graph()
-
+    # importing tuples into graph vertices
     for pair in ancestors:
         graph.add_vertex(pair[0])
         graph.add_vertex(pair[1])
+    # adding edges/pointers to vertices (parent --> child)
     for pair in ancestors:
         graph.add_edge(pair[1], pair[0])
 
+    # using Breadth First, so need Queue
     q = Queue()
+    # pushing starting_node in a List
     q.enqueue([starting_node])
+    # NO IDEA WHAT THE BELOW IS DOING?! 
     max_path_len = 1
     earliest_ancestor = -1
 
+    # setting up conditions for search operations (wile queue is populated)
     while q.size() > 0:
+        # setting head of queue (array) to loval mem
         path = q.dequeue()
+        # setting last item in array to value
         v = path[-1]
-        print("Path", path)
-        print("EA1", earliest_ancestor)
 
+        # search condition
         if (len(path) >= max_path_len and v < earliest_ancestor) or (len(path) > max_path_len):
-            print("EA2", earliest_ancestor)
             earliest_ancestor = v
+            # reassigning var to len of items in path list
             max_path_len = len(path)
-            print("EA3", earliest_ancestor)
-
+        # creating a new array for each neighbour (last item in array) to be appended to queue
         for neighbour in graph.vertices[v]:
+            # new array per neighbour
             new_path = list(path)
+            # adding unique value (neighbour)
             new_path.append(neighbour)
-            print("NP", new_path)
+            # adding it to queue for next round of searching
             q.enqueue(new_path)
-
-    print("dict", graph.vertices)
 
     return earliest_ancestor
 
