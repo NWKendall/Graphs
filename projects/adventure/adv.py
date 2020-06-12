@@ -12,7 +12,7 @@ world = World()
 
 # You may uncomment the smaller graphs for development and testing purposes.
 
-# map_file = "maps/test_line.txt"
+# map_file = "maps/test_line.txt" ✅
 map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
@@ -30,28 +30,31 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
-# unique values to store visited history
-visited = set()
 
 # dict to store rooms and their doors
 room_dict = dict()
 
 # initialize stack
-q = Queue()
-q.enqueue([player.current_room])
 
-while q.size() > 0:
-    path = q.dequeue()
-    cur_room = path[-1]
-    # print("ROOM:", cur_room.id)
+st = Stack()
+st.push(player.current_room)
 
-    if cur_room.id not in visited:
-        visited.add(cur_room.id)
-        room_dict[cur_room.id] = { "n": "?", "s": "?", "e": "?", "w": "?", }
-        
+# mapping continues until dictionary popualtion is equal to number of rooms / dynamic
+while st.size() > 0:
+    # if room doesnt exist
+    cur_room = st.pop()
+    # print("stack", st.size(), "st.pop", cur_room)
+    if player.current_room.id not in room_dict:
+        # add to dictionary, values being cardinal directions
+        room_dict[player.current_room.id] = player.current_room.get_exits()
+        for cardinal in room_dict[player.current_room.id]:
+            # st.push(player.current_room)
+            print("c", cardinal)
+            traversal_path.append(cardinal)
+            st.push(player.travel(cardinal))
+            print("here", player.current_room.id)
 
-        
-print("VISITED:", visited)
+
 print("ROUTE:", traversal_path)
 print("ROOM_DICT:", room_dict)
 # for room in visited:
@@ -88,10 +91,19 @@ else:
 
 
 
+"""
+Does current room have doors?
+    YES
+        How many Doors?   < ------
+        Store doors in tmp / key? |
+        go through one door       |
+            remove door from tmp  |
+            add cardinal to path  |
+            update visited        |
+            check again ----------
+    No
+        Go back to previous room
+        add cardinal to path
+        check another door (NOT THIS ONE AGAIN) - check dictionary
+"""
 
-
-# UPER
-# create graph
-# create visited dictionary
-# create q for traversal
-# start 
