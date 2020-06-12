@@ -30,6 +30,7 @@
      - if ? N, S, E, W, None
     - constraints
     - goal
+- include tuple coordinates to room
 
 
 ```
@@ -41,7 +42,11 @@ for cardinal in visited[room]:
 ## Useful
 - maze solving algos
     - log all paths, not just winning
-
+- search 
+    - something
+    - BFS shortest
+- AND traversal
+    - finding everything
 ## README
  1. picks a random unexplored direction from the player's current room, 
  2. travels and logs that direction, 
@@ -54,3 +59,7 @@ You can find the path to the shortest unexplored room by using a breadth-first s
 
 2. BFS will return the path as a list of room IDs. You will need to convert this to a list of n/s/e/w directions before you can add it to your traversal path.
 
+
+## PLAN
+
+- populate graph
