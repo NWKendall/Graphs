@@ -54,12 +54,23 @@ while st.size() > 0:
             st.push(player.travel(cardinal))
             print("here", player.current_room.id)
 
+# ##### PLAYER AND ROOM METHOD DESCRIPTIONS #####
+# print("get_exits:", player.current_room.get_exits())
+# # returns arrays of strings
+# print("get_exits_string:", player.current_room.get_exits_string())
+# # returns exits array as string value for game display
+# print("get_room_in_direction:", player.current_room.get_room_in_direction("n"))
+# # returns room object, shows name, descrip and exits
+# print("get_coords:", player.current_room.get_coords())
+# # return list of coords
+# print(player.travel("n"), player.current_room)
+# # updates player.current room
 
-print("ROUTE:", traversal_path)
-print("ROOM_DICT:", room_dict)
-# for room in visited:
-#     print(room)
+# print("ROUTE:", traversal_path)
+# print("ROOM_DICT:", room_dict)
+
 # TRAVERSAL TEST
+
 visited_rooms = set()
 player.current_room = world.starting_room
 visited_rooms.add(player.current_room)
@@ -92,18 +103,30 @@ else:
 
 
 """
-Does current room have doors?
-    YES
-        How many Doors?   < ------
-        Store doors in tmp / key? |
-        go through one door       |
-            remove door from tmp  |
-            add cardinal to path  |
-            update visited        |
-            check again ----------
-    No
-        Go back to previous room
-        add cardinal to path
-        check another door (NOT THIS ONE AGAIN) - check dictionary
-"""
+Has the room been explored? <-------------
+    No:                                   |
+        Does current room have doors?     | 
+            YES                           |
+                How many Doors?           |
+                Store doors in tmp / key? |
+                go through one door       | <---------------------------------
+                    remove door from tmp  |                                   |
+                    add cardinal to path  |                                   |
+                    update explored       |                                   |
+                    check again ----------                                    |
+            No                                                                |
+                Go back to previous room                                      |
+                add cardinal to path                                          |
+                check another door (NOT THIS ONE AGAIN) - check dictionary    |
+    Yes:                                                                      |
+        Any doors left that need exploring?                                   |
+            Yes ---------------------------------------------------------------
+            No:
+                go back to previous room
+                add cardinal to path
+                check another door (NOT THIS ONE AGAIN) - check dictionary
 
+    EVERY TRAVEL MUST BE ADDED TO THE TRAVERSAL_PATH!!!!!
+    https://www.youtube.com/watch?v=gBC_Fd8EE8A&t=306s
+    https://www.youtube.com/watch?v=Zq4upTEaQyM&t=610s
+"""
